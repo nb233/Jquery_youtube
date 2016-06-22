@@ -1,0 +1,70 @@
+#videoName {
+	font-size:18;
+	font-weight:700
+}
+
+#channelName {
+	padding-top:20;
+}
+
+#channelPic {
+	height:50;
+	width:60;
+	float:left;
+}
+
+#cName {
+	float:left;
+	font-weight:500;
+	padding-left: 5;
+}
+
+#viewCount{
+	float:right;
+	font-size:14;
+
+}
+
+#publishedAt{
+	padding:10;
+}
+
+#vidDesc{
+	padding:10;
+}
+
+body {
+	background-color:#F8F8F8
+}
+
+#youLogo {
+	height : 100;
+	width:120;
+
+}
+
+#searchButton {
+	height : 30;
+	width:70;
+}
+
+#searchTerm {
+	margin-left:30;
+	height:30;
+	width:550;
+}
+
+#videoInfo {
+	padding-bottom:10;
+	margin-top:18;
+	background-color:white;
+	width : 65%;
+	float:left;
+}
+
+#videoInfo2{
+	margin-top:18;
+	background-color:white;
+	width : 65%;
+	float:left;
+}

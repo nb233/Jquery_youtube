@@ -1,0 +1,38 @@
+<html lang="en">
+<body class="container">
+
+    <main>
+       <table>
+        <tr>
+            <div id ='titleBar'>
+                <td>
+                    <img id ="youLogo" src = "./images/youtubeLogo.png" style ="height : 80;width:100">
+                </td>
+                <td>
+                    <input type = "text" id ="searchItem" style ="margin-left:30;height:30;width:550">
+                </td>
+
+                <td>
+                    <img src = "./images/searchButton.png" style ="height : 30;width:70">
+                </td>
+            </div>
+        </tr>
+
+        <tr>
+
+            <td>
+
+            <div id ="result">
+            <img src = "https://i.ytimg.com/vi/8op1GLbMGKk/default.jpg" style ="height:90;width:120;">
+            </div>
+            </td>
+
+            <td>
+                <%= videoList[0].snippet.title %>
+            </td>
+        </tr>
+    </body>
+    </main>
+
+</body>
+</html>

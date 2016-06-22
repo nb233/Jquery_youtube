@@ -1,0 +1,111 @@
+<html>
+	<head>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"> </script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://localhost:3000/images/styles.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+
+	<body>
+
+
+		<nav class="navbar navbar-default">
+				
+		    	<a href = "http://localhost:3000"> <img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"> </a>
+		        <input type = "text" id ="searchTerm">
+		        <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png"> 
+
+		</nav>
+
+		<div class ="container">
+			<div id ='videoArea'>
+			</div>
+
+			<div id ="videoInfo" class ="container-fluid"> 
+
+			</div>
+			<div id ="videoInfo2" class = "container-fluid">
+
+			</div>
+		</div>
+
+		
+	</body>
+
+	<script>
+
+
+		$(function(){
+			
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+			        }
+			    }
+			};
+		
+			var vidId = getUrlParameter('vidId');
+
+			function getpubDate(datetime){
+				var dtime = datetime.replace("T"," ").replace(/\..+/g,"")
+				dtime = new Date( dtime );
+				var month = dtime.getUTCMonth() + 1; //months from 1-12
+				var day = dtime.getUTCDate();
+				var year = dtime.getUTCFullYear();
+				var newdate = day + "/" + month + "/" + year;
+				return newdate
+
+			}
+			$.ajax({
+				type : 'GET',
+				url : '/video/?vidId=' +vidId + '&flag=getVideo',
+				success : function(data){
+					$('#videoArea').html('<iframe width = "65%" height ="60%" src="http://www.youtube.com/embed/'+data.id+'"> </iframe>');
+					$.ajax({
+						type : 'GET',
+						url : '/channelInfo/?chId=' + data.snippet.channelId ,
+						success : function(channelData){
+							$('.container-fluid').html('<div id ="videoName">'+data.snippet.title + '</div> <div id="channelName"> <img id ="channelPic" src = "' + channelData.snippet.thumbnails.default.url +'"> <span id ="cName"> ' + data.snippet.channelTitle + '</span><div id ="viewCount">' + data.statistics.viewCount + ' views </div></div>');	
+							var dt = getpubDate(data.snippet.publishedAt);
+							$('#videoInfo2').html('<div id ="publishedAt"> <b> Published On ' + dt + ' </b></div> <div id =vidDesc> ' + data.snippet.description.replace(/\n/g, "<br />") +'</div>');
+
+						}
+
+					});	
+
+			}	
+		});
+
+		
+			$("#searchButton").on('click',function(){
+				var query = $("#searchTerm").val();
+				console.log(query);
+				$.ajax({
+					type : 'GET',
+					url : '/search?q=' + query,
+					success : function(data){
+						window.location.href = "/search?q=" + query;
+						//populateSearchlist($("#searchList"), data);
+						
+				}
+
+
+				});
+			
+
+		});
+	});
+
+
+	</script>
+
+</html>

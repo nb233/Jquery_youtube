@@ -1,0 +1,71 @@
+<html>
+<head>
+	<style>
+		a:link {color: black;text-decoration:none}
+	</style>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"> </script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://localhost:3000/images/styles.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+	<body>
+		<nav class="navbar navbar-default">
+				
+		    	<img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png">
+		        <input type = "text" id ="searchTerm">
+			    <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png"> </a>
+
+		</nav>
+
+		<div class = "container">
+
+
+		<table style ="margin:2;background-color:#F8F8F8" id ="searchList">
+		</table>
+
+
+	</div>
+
+	</body>
+
+	<script>
+		$(function(){
+			function populateSearchlist(select, data) {
+		    select.html('');
+		    var items = [];
+		    $.each(data, function (id, option) {
+		        items.push('<tr>  <td style ="padding : 2">	 <a href="/video?vidId="> <img src =' + option.snippet.thumbnails.default.url + '> </a></td> <td style ="float:left;padding:2;"> <a href="/video?vidId=' + option.id.videoId +'&flag=getPage"> <ul style = "list-style-type :none;font-family:Arial;"> <li style ="color:#498bf5;"> ' + option.snippet.title +  '</li> <li style ="font-size:14;">' + option.snippet.channelTitle + '</li> <li style ="font-size:14;">' + option.snippet.description + '</li> </ul>' +  ' </a></td> </tr>');
+		    });  
+		    select.append(items.join(''));
+			
+			}
+
+			$("#searchButton").on('click',function(){
+				var query = $("#searchTerm").val();
+				console.log(query);
+				$.ajax({
+					type : 'GET',
+					url : '/search?q=' + query +'&source=index',
+					success : function(data){
+						console.log("Wuhoo");
+						window.location.href = "/search?q=" + query;
+						//populateSearchlist($("#searchList"), data);
+						
+				}
+
+
+				});
+			
+
+		});
+
+		
+
+	});
+	</script>
+
+</html>
+
