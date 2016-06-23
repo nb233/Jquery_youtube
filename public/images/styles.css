@@ -1,3 +1,12 @@
+@media screen and (max-width : 775px){
+	#imgContainer{
+		width: 50%;
+
+	}
+	
+}
+
+
 #videoName {
 	font-size:18;
 	font-weight:700
@@ -6,6 +15,8 @@
 #channelName {
 	padding-top:20;
 }
+
+
 
 #channelPic {
 	height:50;
@@ -43,6 +54,7 @@ body {
 
 }
 
+
 #searchButton {
 	height : 30;
 	width:70;
@@ -67,4 +79,8 @@ body {
 	background-color:white;
 	width : 65%;
 	float:left;
+}
+
+#navItems li{
+	display: inline;
 }

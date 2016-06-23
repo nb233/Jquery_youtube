@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
 app.get('/search/', function(req, res) {
 	if(req.query.q!=""||req.query.source =='search'){
 		youtube.search.list({ key: API_KEY, part: 'snippet',q: req.query.q , type: 'video',maxResults:10}, function(err, data) {
-		  	console.log(data);
+		  	//console.log(data);
 		  	data.items[0].queryVal = req.query.q;
 		  	data_to_send = data.items;
 		  	res.render('search');

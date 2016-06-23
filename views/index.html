@@ -1,4 +1,4 @@
-<html>
+	<html>
 <head>
 	<style>
 		a:link {color: black;text-decoration:none}
@@ -12,15 +12,19 @@
 
 </head>
 	<body>
-		<nav class="navbar navbar-default">
-				
-		    	<img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png">
-		        <input type = "text" id ="searchTerm">
-			    <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png"> </a>
+		<nav class="navbar navbar-default" style ="width:100%;position:fixed;">
+				<div id = "imgContainer" style ="display:inline-block;">
+			    	<img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"></a>
+			    </div>
+			    	<div id = "searchWrapper" style ="display:inline-block;">
+
+			        <input type = "text" id ="searchTerm">
+				    <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png">		
+				    </div>	
 
 		</nav>
 
-		<div class = "container">
+		<div class = "container" id ="#restBody">
 
 
 		<table style ="margin:2;background-color:#F8F8F8" id ="searchList">
@@ -50,7 +54,6 @@
 					type : 'GET',
 					url : '/search?q=' + query +'&source=index',
 					success : function(data){
-						console.log("Wuhoo");
 						window.location.href = "/search?q=" + query;
 						//populateSearchlist($("#searchList"), data);
 						
