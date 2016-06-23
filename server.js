@@ -6,6 +6,8 @@ var data_to_send;
 
 var API_KEY = 'AIzaSyAr9xBlzUbDqg44kU2DahiCr4_DsQ9Fbug'; // specify your API key here
 
+var nextToken;
+
 
 app.set('views', __dirname + '/views');
 // set the view engine to ejs
@@ -24,11 +26,13 @@ app.get('/', function(req, res) {
 
 app.get('/search/', function(req, res) {
 	if(req.query.q!=""||req.query.source =='search'){
-		youtube.search.list({ key: API_KEY, part: 'snippet',q: req.query.q , type: 'video',maxResults:10}, function(err, data) {
+		youtube.search.list({ key: API_KEY, part: 'snippet',q: req.query.q , type: 'video',maxResults:25}, function(err, data) {
 		  	//console.log(data);
 		  	data.items[0].queryVal = req.query.q;
+
 		  	data_to_send = data.items;
 		  	res.render('search');
+		  	nextToken = data.nextPageToken
 	});
 	}
 	else{
@@ -37,6 +41,19 @@ app.get('/search/', function(req, res) {
 	/*console.log("Say something!")
 	console.log("In search " + req.query.q);
 	*/
+
+});
+
+app.get('/moreResults/',function(req,res){
+
+	youtube.search.list({ key: API_KEY, part: 'snippet',q: req.query.q , type: 'video',maxResults:25,pageToken:nextToken}, function(err, data) {
+		  	console.log(nextToken);
+		  	nextToken = data.nextPageToken;
+		  	res.send(data.items);
+	});
+
+
+
 
 });
 

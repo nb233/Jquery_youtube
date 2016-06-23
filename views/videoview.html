@@ -9,34 +9,48 @@
 
 	<body>
 
+		<nav class="navbar navbar-default" style ="width:100%;position:fixed;">
+				<div id = "imgContainer" style ="display:inline-block;">
+			    	<a href ="http://localhost:3000/"><img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"></a>
+			    </div>
+			    	<div  id = "searchWrapper" style ="display:inline-block;">
 
-		<nav class="navbar navbar-default">
-				
-		    	<a href = "http://localhost:3000"> <img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"> </a>
-		        <input type = "text" id ="searchTerm">
-		        <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png"> 
+			        <input type = "text" id ="searchTerm">
+				    <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png">		
+				    </div>	
 
 		</nav>
 
-		<div class ="container">
-			<div id ='videoArea'>
-			</div>
+		<div class ="container" style ="padding-top:110;">
+		<ul style ="list-style-type:none">
+			<li><div id ='videoArea'>
+			</div></li>
 
-			<div id ="videoInfo" class ="container-fluid"> 
+			<li><div id ="videoInfo" class ="container-fluid"> 
 
-			</div>
-			<div id ="videoInfo2" class = "container-fluid">
+			</div> </li>
+			<li><div id ="videoInfo2" class = "container-fluid">
 
-			</div>
+			</div> </li>
+		</ul>
 		</div>
+	
+		<div class="modal">
 
 		
 	</body>
 
 	<script>
 
-
 		$(function(){
+
+
+			$body = $("body");
+			$(document).on({
+			    ajaxStart: function() { $body.addClass("loading");    },
+			     ajaxStop: function() { $body.removeClass("loading"); }    
+			});
+
 			
 			var getUrlParameter = function getUrlParameter(sParam) {
 			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -69,7 +83,7 @@
 				type : 'GET',
 				url : '/video/?vidId=' +vidId + '&flag=getVideo',
 				success : function(data){
-					$('#videoArea').html('<iframe width = "65%" height ="60%" src="http://www.youtube.com/embed/'+data.id+'"> </iframe>');
+					$('#videoArea').html('<iframe class ="video" width = "65%" height ="60%" src="http://www.youtube.com/embed/'+data.id+'"> </iframe>');
 					$.ajax({
 						type : 'GET',
 						url : '/channelInfo/?chId=' + data.snippet.channelId ,

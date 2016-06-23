@@ -16,6 +16,8 @@
 				<div id = "imgContainer" style ="display:inline-block;">
 			    	<img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"></a>
 			    </div>
+
+			    	
 			    	<div id = "searchWrapper" style ="display:inline-block;">
 
 			        <input type = "text" id ="searchTerm">
@@ -26,17 +28,27 @@
 
 		<div class = "container" id ="#restBody">
 
-
 		<table style ="margin:2;background-color:#F8F8F8" id ="searchList">
 		</table>
 
 
+		</div>
+
+	<div class="modal">
 	</div>
+	</body>
 
 	</body>
 
 	<script>
 		$(function(){
+
+			$body = $("body");
+			$(document).on({
+			     ajaxStart: function() { $body.addClass("loading");    },
+			     ajaxStop: function() { $body.removeClass("loading"); }    
+			});
+
 			function populateSearchlist(select, data) {
 		    select.html('');
 		    var items = [];
@@ -49,18 +61,20 @@
 
 			$("#searchButton").on('click',function(){
 				var query = $("#searchTerm").val();
-				console.log(query);
-				$.ajax({
-					type : 'GET',
-					url : '/search?q=' + query +'&source=index',
-					success : function(data){
-						window.location.href = "/search?q=" + query;
-						//populateSearchlist($("#searchList"), data);
+				query=query.trim();
+				if(query.length>0){
+					$.ajax({
+						type : 'GET',
+						url : '/search?q=' + query +'&source=index',
+						success : function(data){
+							window.location.href = "/search?q=" + query;
+							//populateSearchlist($("#searchList"), data);
 						
 				}
 
 
 				});
+			}
 			
 
 		});

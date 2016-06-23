@@ -28,29 +28,52 @@
    </script>
 </head>
 	<body>
-		<nav class="navbar navbar-default" style ="position:fixed;width :100%">
+		<nav class="navbar navbar-default" style ="width :100%">
 				
-		    	<a href ="http://localhost:3000"><img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"> </a>
-		        <input type = "text" id ="searchTerm">
-		        <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png"> 
+				<div id = "imgContainer" style ="display:inline-block;">
+			    	<img id ="youLogo" src = "http://localhost:3000/images/youtubeLogo.png"></a>
+			    </div>
+
+			    	
+			    <div id = "searchWrapper" style ="display:inline-block;">
+
+			        <input type = "text" id ="searchTerm">
+				    <img id ="searchButton" src = "http://localhost:3000/images/searchButton.png">		
+				</div>	
 
 		</nav>
 
 		<div class = "container">
 
 
-		<table style ="margin:2;background-color:#F8F8F8" id ="searchList">
+		<table style ="margin:2;background-color:#F8F8F8;width:100%" id ="searchList">
 		</table>
 
+		<center><button id ="nextResults"> More </button> <button id ="moveTop">Go to Top</button> </center>
 
-	</div>
 
 
 	<input id="reloadValue" type="hidden" name="reloadValue" value="" />
+
+	<div class="modal">
 	</body>
 
 	<script>
+
 		$(function(){
+
+			$("#moveTop").on('click',function(err,data){
+				window.scrollTo(0, 0);
+
+
+			});
+
+			var nextToken;
+			$body = $("body");
+			$(document).on({
+			    ajaxStart: function() { $body.addClass("loading");    },
+			     ajaxStop: function() { $body.removeClass("loading"); }    
+			});
 			$.ajax({
 					type : 'GET',
 					url : '/search?q=',
@@ -58,28 +81,42 @@
 						populateSearchlist($("#searchList"), data);
 						oldQuery = data[0].queryVal;
 						$("#searchTerm").val(data[0].queryVal);
-
-						
+					
 					}
 
-
 			});
+
+
 			function populateSearchlist(select, data) {
-		    select.html('');
 		    var items = [];
 		    $.each(data, function (id, option) {
-		        items.push('<tr>  <td style ="padding : 2">	 <a href="/video?vidId="> <img src =' + option.snippet.thumbnails.default.url + '> </a></td> <td style ="float:left;padding:2;"> <a href="/video?vidId=' + option.id.videoId +'&flag=getPage"> <ul style = "list-style-type :none;font-family:Arial;"> <li style ="color:#498bf5;"> ' + option.snippet.title +  '</li> <li style ="font-size:14;">' + option.snippet.channelTitle + '</li> <li style ="font-size:14;">' + option.snippet.description + '</li> </ul>' +  ' </a></td> </tr>');
+		        items.push('<tr>  <td style ="padding : 2">	 <a href="/video?vidId="> <img src =' + option.snippet.thumbnails.default.url + '> </a></td> <td style ="float:left;padding:2;"> <a href="/video?vidId=' + option.id.videoId +'&flag=getPage"> <ul id= "vidInfolist" style = "list-style-type :none;font-family:Arial;"> <li style ="color:#498bf5;"> ' + option.snippet.title +  '</li> <li style ="font-size:14;">' + option.snippet.channelTitle + '</li> <li style ="font-size:14;">' + option.snippet.description + '</li> </ul>' +  ' </a></td> </tr>');
 		    });  
 		    select.append(items.join(''));
 			
 			}
 
+			$("#nextResults").on('click',function(){
+
+					$.ajax({
+					type : 'GET',
+					url : '/moreResults?q='+$('#searchTerm').val(),
+					success : function(data){
+						populateSearchlist($("#searchList"), data);	
+					}
+
+			});
+
+
+			});
+
 			$("#searchButton").on('click',function(){
 				var query = $("#searchTerm").val();
-				console.log(query);
+				query=query.trim();
+				if(query.length>0){
 				$.ajax({
 					type : 'GET',
-					url : '/search?q=' + query +'&source=search',
+					url : '/search?q?nextPage=true' + query +'&source=search',
 					success : function(data){
 						//history.pushState(null, null, "http://localhost:3000/search?q=" +oldQuery);
 						window.location.href = "/search?q=" + query;
@@ -87,6 +124,7 @@
 
 
 				});
+			}
 			
 
 		});
