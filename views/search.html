@@ -89,7 +89,7 @@
 			function populateSearchlist(select, data) {
 		    var items = [];
 		    $.each(data, function (id, option) {
-		        items.push('<tr>  <td style ="padding : 2">	 <a href="/video?vidId="> <img src =' + option.snippet.thumbnails.default.url + '> </a></td> <td style ="float:left;padding:2;"> <a href="/video?vidId=' + option.id.videoId +'&flag=getPage"> <ul id= "vidInfolist" style = "list-style-type :none;font-family:Arial;"> <li style ="color:#498bf5;"> ' + option.snippet.title +  '</li> <li style ="font-size:14;">' + option.snippet.channelTitle + '</li> <li style ="font-size:14;">' + option.snippet.description + '</li> </ul>' +  ' </a></td> </tr>');
+		        items.push('<tr>  <td style ="padding : 2">	 <a href="/video?vidId="> <img src =' + option.snippet.thumbnails.default.url + '> </a></td> <td style ="float:left;padding:2;max-height:1;"> <a href="/video?vidId=' + option.id.videoId +'&flag=getPage"> <ul id= "vidInfolist" style = "list-style-type :none;font-family:Arial;"> <li style ="color:#498bf5;"> ' + option.snippet.title +  '</li> <li style ="font-size:14;">' + option.snippet.channelTitle + '</li> <li style ="font-size:14;">' + option.snippet.description + '</li> </ul>' +  ' </a></td> </tr>');
 		    });  
 		    select.append(items.join(''));
 			
