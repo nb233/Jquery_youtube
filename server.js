@@ -4,7 +4,7 @@ var google = require('googleapis');
 var youtube = google.youtube('v3');
 var data_to_send;
 
-var API_KEY = 'AIzaSyAr9xBlzUbDqg44kU2DahiCr4_DsQ9Fbug'; // specify your API key here
+var API_KEY = {API_KEY} // specify your API key here
 
 var nextToken;
 
